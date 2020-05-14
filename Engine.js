@@ -146,14 +146,13 @@ class Engine {
 }
 
 
-const testEngine = new Engine();
-testEngine.populateDice();
-// console.log(testEngine.dice);
+// const testEngine = new Engine();
+// testEngine.populateDice();
+// // console.log(testEngine.dice);
 
-
-
-
-
+var checkWord = require('check-word')
+const words = checkWord ('en')
+(words.check('fansasd')
 
 
 
