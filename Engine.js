@@ -1,3 +1,5 @@
+
+
 class Engine {
     
     constructor() {
@@ -67,27 +69,34 @@ class Engine {
                 currentLetter:''
             }
             }
-        this.currentword = ''//user's current  word
+        this.currentWord = ''//user's current  word
         this.gameon = false;
         this.score = 0;
-        this.diceStore = document.querySelectorAll('.dice')
+        this.diceStore = document.querySelectorAll('.dice');
         //iterate diceStore array
         this.diceStore.forEach( ele => {
             //add event listner to each element, listen for  click
             ele.addEventListener('mousedown', (event) => {
                 
                 this.buildWord(event)
-                this.dragEvent()
+                this.addMouseoverEvent()
             })
         }) 
-        // this.scoreboard = new Scoreboard(this.score);
-        }
+        // this.scoreboard = new Scoreboard(this.score)
+        this.buildWord = this.buildWord.bind(this); 
+        this.checkWord = this.checkWord.bind(this);
+        this.addMouseoverEvent = this.addMouseoverEvent.bind(this);
+        this.wordList = wordList
+        console.log(this.wordList)
+        
+    }
+        
             
-    dragEvent(){
+    addMouseoverEvent(){
         //create 2 event listeners on every dice
         
         this.diceStore.forEach( ele =>{
-            ele.addEventListener('mouseover', (event) => this.buildWord(event))
+            ele.addEventListener('mouseover', this.buildWord)
             ele.addEventListener('mouseup', this.checkWord)
         })
     }
@@ -96,18 +105,32 @@ class Engine {
         // iterate through dice object -- will give us access to each individual dice object
         // set currentLetter equal to randomly generated index of possibleLetter array
         for (const key in this.dice) {
-
+            console.log()
             let randomIndex = Math.floor(Math.random() * 6);
             this.dice[key].currentLetter = this.dice[key].possibleLetters[randomIndex];
         }
     }
     checkWord(){
     //return boolean of whether str is a word  or not 
+    // check if its a word
     
-    document.querySelectorAll('.dice').forEach( (ele) => {
-        console.log(this.currentWord)
-        ele.removeEventListener('mouseover', this.checkWord )
+    this.diceStore.forEach( ele => {
+       
+        ele.removeEventListener('mouseover', this.buildWord)
     })
+
+    const checkedWord = this.currentWord.toLowerCase();
+
+    this.currentWord = '';
+
+    if (wordList[checkedWord]) {
+        console.log('checked word:  ', checkedWord, 'is a word?  TRUE')
+        return true;
+    } else {
+        console.log('check word:  ', checkedWord, 'is a word? FALSE')
+        return false
+    }
+
     }
     buildWord(event){
     // going to add the letter the user has clicked to the empty string of currentword
@@ -115,9 +138,9 @@ class Engine {
     // will take the inner text  of targe of event and add that to the word currently stored stored in current word to str stored in this.current currentword
         
         event.preventDefault()
-        this.currentword += event.target.innerText
+        this.currentWord += event.target.innerText
         
-        console.log(this.currentword)
+        console.log('this is the letter that is being processed:    ', event.target.innerText)
     }
     addScore(num){
         //update score property
