@@ -150,10 +150,10 @@ class Engine {
 // testEngine.populateDice();
 // // console.log(testEngine.dice);
 
-var checkWord = require('check-word')
-const words = checkWord ('en')
-(words.check('fansasd')
-
+// var checkWord = require('check-word')
+// const words = checkWord ('en')
+// console.log((words.check('fansasd')
+// )
 
 
 
